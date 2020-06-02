@@ -2,7 +2,8 @@
     font: 16px Lucida Sans, Trebuchet MS, Tahoma, sans-serif;
     color: #000;
     padding: 20px;
-	text-align: center;
+    text-align: center;
+    width: max-content;
 }
 
 ul.DA-PianoKeyboard {
