@@ -1,3 +1,2 @@
 theme: jekyll-theme-cayman
-github:
-  title: Piano Visual
+site.title: Piano Visual
