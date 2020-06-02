@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="piano_style.css">
+        <title>Selecionar exercício</title>
+		
+		<script src="exercicios.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="piano.js"></script>
+        <script src="exercicios.js"></script>
+        <script src="timer.js"></script>
+
+
+        <script type="text/javascript">
+
+            $( document ).ready(function() {
+                //create piano with 3 octaves, starting at C4 (lowest key)
+                //shows labels and octave shift buttons
+                var keyboardHTML = htmlForKeyboardWithOctaves(3, octaves.C3, true, false, false, false)
+                //render the keyboard in the div
+                $("#keyboardContainer").html(keyboardHTML)
+                //when keys are pressed updatePreview() is called
+                bindKeysToFunction(clicouNota)
+                //set the default clef to G4
+                setSelectedClef(clefs.G4)
+            })
+
+			
+			function clicouNota(sender, paeNote) {
+				console.log("id = " + sender.id);
+				conferirResposta(sender.id.replace("note", ""));
+			}
+
+        </script>
+	</head>
+	
+	
+	<body>
+		<div style="display:none" id="keyboardContainer"></div><!-- this will hold the keyboard -->
+		
+		<div style="display:block" id="opcoesCompletarIntervaloContainer">
+			<fieldset>
+				<legend>Completar intervalo</legend>
+				<fieldset>
+					<legend>Tipo de intervalo</legend>
+					<input type="checkbox" id="chkTipoIntervaloB2" name="chkTipoIntervalo" value="b2" checked>
+					<label for="chkTipoIntervaloB2">Segunda menor</label>
+					
+					<input type="checkbox" id="chkTipoIntervalo2" name="chkTipoIntervalo" value="2" checked>
+					<label for="chkTipoIntervalo2">Segunda maior</label>
+					
+					<input type="checkbox" id="chkTipoIntervaloB3" name="chkTipoIntervalo" value="b3" checked>
+					<label for="chkTipoIntervaloB3">Terça menor</label>
+					
+					<input type="checkbox" id="chkTipoIntervalo3" name="chkTipoIntervalo" value="3" checked>
+					<label for="chkTipoIntervalo3">Terça maior</label>
+					
+					<input type="checkbox" id="chkTipoIntervalo4" name="chkTipoIntervalo" value="4" checked>
+					<label for="chkTipoIntervalo4">Quarta justa</label>
+					
+					<input type="checkbox" id="chkTipoIntervaloS4" name="chkTipoIntervalo" value="#4" checked>
+					<label for="chkTipoIntervaloS4">Quarta aumentada</label>
+					
+					<input type="checkbox" id="chkTipoIntervaloB5" name="chkTipoIntervalo" value="b5" checked>
+					<label for="chkTipoIntervaloB5">Quinta diminuta</label>
+					
+					<input type="checkbox" id="chkTipoIntervalo5" name="chkTipoIntervalo" value="5" checked>
+					<label for="chkTipoIntervalo5">Quinta justa</label>
+					
+					<input type="checkbox" id="chkTipoIntervaloS5" name="chkTipoIntervalo" value="#5" checked>
+					<label for="chkTipoIntervaloS5">Quinta aumentada</label>
+					
+					<input type="checkbox" id="chkTipoIntervaloB6" name="chkTipoIntervalo" value="b6" checked>
+					<label for="chkTipoIntervaloB6">Sexta menor</label>
+					
+					<input type="checkbox" id="chkTipoIntervalo6" name="chkTipoIntervalo" value="6" checked>
+					<label for="chkTipoIntervalo6">Sexta maior</label>
+					
+					<input type="checkbox" id="chkTipoIntervaloS6" name="chkTipoIntervalo" value="#6" checked>
+					<label for="chkTipoIntervaloS6">Sexta aumentada</label>
+					
+					<input type="checkbox" id="chkTipoIntervaloB7" name="chkTipoIntervalo" value="b7" checked>
+					<label for="chkTipoIntervaloB7">Sétima menor</label>
+					
+					<input type="checkbox" id="chkTipoIntervalo7" name="chkTipoIntervalo" value="7" checked>
+					<label for="chkTipoIntervalo7">Sétima maior</label>
+				</fieldset>
+				<br/>
+				<fieldset>
+					<legend>Direção</legend>
+					<input type="checkbox" id="chkDirecaoIntervaloAsc" name="chkDirecaoIntervalo" value="asc" checked>
+					<label for="chkDirecaoIntervaloAsc">Ascendente</label>
+					
+					<input type="checkbox" id="chkDirecaoIntervaloDesc" name="chkDirecaoIntervalo" value="desc">
+					<label for="chkDirecaoIntervaloDesc">Descendente</label>
+				</fieldset>
+				<br/>
+				<fieldset>
+					<legend>Nota base</legend>
+					<input type="checkbox" id="chkGrupoNotasTeclasBrancas" name="chkGrupoNotas" value="asc" checked onclick="javascript:SelecionarTeclasBrancasOuPretas()">
+					<label for="chkGrupoNotasTeclasBrancas">Teclas brancas</label>
+					
+					<input type="checkbox" id="chkGrupoNotasTeclasPretas" name="chkGrupoNotas" value="desc" checked onclick="javascript:SelecionarTeclasBrancasOuPretas()">
+					<label for="chkGrupoNotasTeclasPretas">Teclas pretas</label>					
+					<br/>
+					<br/>
+					<input type="checkbox" id="chkNotaC" name="chkNotas" value="C" checked>
+					<label for="chkNotaC">C</label>
+					
+					<input type="checkbox" id="chkNotaCsDb" name="chkNotas" value="C#|Db" checked>
+					<label for="chkNotaCsDb">C#|Db</label>
+					
+					<input type="checkbox" id="chkNotaD" name="chkNotas" value="D" checked>
+					<label for="chkNotaD">D</label>
+					
+					<input type="checkbox" id="chkNotaDsEb" name="chkNotas" value="D#|Eb" checked>
+					<label for="chkNotaDsEb">D#|Eb</label>
+					
+					<input type="checkbox" id="chkNotaE" name="chkNotas" value="E" checked>
+					<label for="chkNotaE">E</label>
+					
+					<input type="checkbox" id="chkNotaF" name="chkNotas" value="F" checked>
+					<label for="chkNotaF">F</label>
+					
+					<input type="checkbox" id="chkNotaFsGb" name="chkNotas" value="F#|Gb" checked>
+					<label for="chkNotaFsGb">F#|Gb</label>
+					
+					<input type="checkbox" id="chkNotaG" name="chkNotas" value="G" checked>
+					<label for="chkNotaG">G</label>
+					
+					<input type="checkbox" id="chkNotaGsAb" name="chkNotas" value="G#|Ab" checked>
+					<label for="chkNotaGsAb">G#|Ab</label>
+					
+					<input type="checkbox" id="chkNotaA" name="chkNotas" value="A" checked>
+					<label for="chkNotaA">A</label>
+					
+					<input type="checkbox" id="chkNotaAsBb" name="chkNotas" value="A#|Bb" checked>
+					<label for="chkNotaAsBb">A#|Bb</label>
+					
+					<input type="checkbox" id="chkNotaB" name="chkNotas" value="B" checked>
+					<label for="chkNotaB">B</label>					
+				</fieldset>
+				<br/>
+				<fieldset>
+					<legend>Tipo de destaque</legend>
+					<input type="radio" id="radTipoDestaqueTeclaInteira" name="radTipoDestaque" value="inteira" checked>
+					<label for="radTipoDestaqueTeclaInteira">Tecla inteira</label>
+					
+					<input type="radio" id="radGrupoNotasTeclasPretas" name="radTipoDestaque" value="circulo">
+					<label for="radGrupoNotasTeclasPretas">Círculo</label>			
+				</fieldset>
+				<br/>
+				<input type="button" value="Iniciar" onclick="javascript:iniciarCompletarIntervalo();">
+			</fieldset>
+		</div>
+	</body>
+</html>
