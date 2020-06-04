@@ -1,6 +1,6 @@
 ## Exercícios de piano
 
-[Intervalos](/selecionarExercicio.html)
+[Intervalos](/completarIntervaloOpcoes.html)
 
 ## Welcome to GitHub Pages
 
