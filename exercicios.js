@@ -149,21 +149,18 @@ function SelecionarTeclasBrancasOuPretas()
 	
 }
 
-var _tipoIntervalo = []; // (array com os códigos dos tipos de intervalos selecionados)
-var _direcaoIntervalo = []; // "asc", "desc" (array, com 1 ou duas posições)
-var _notasBase = []; // array com as notas selecionadas, já com as oitavas
-var _tipoDestaque; // "inteira", "cirulo"
 
-function iniciarCompletarIntervalo() 
+function iniciarCompletarOuIdentificarIntervalo(completarOuIdentificar) 
 {
-	_direcaoIntervalo = [];
-	_notasBase = [];
+	var _tipoIntervalo = []; // (array com os códigos dos tipos de intervalos selecionados)
+	var _direcaoIntervalo = []; // "asc", "desc" (array, com 1 ou duas posições)
+	var _notasBase = []; // array com as notas selecionadas, já com as oitavas
+	var _tipoDestaque; // "inteira", "circulo"
 
 	var chkTipoIntervalo = document.getElementsByName("chkTipoIntervalo");
 	var chkDirecaoIntervalo = document.getElementsByName("chkDirecaoIntervalo");
 	var chkNotas = document.getElementsByName("chkNotas");
 	var radTeclaInteira = document.getElementById("radTipoDestaqueTeclaInteira");
-
 
 	for (var i = 0; i < chkTipoIntervalo.length; i++)
 	{
@@ -211,11 +208,21 @@ function iniciarCompletarIntervalo()
 		alert("Selecione ao menos uma nota base.");
 		return;
 	}
+
+	localStorage["_tipoIntervalo"] = _tipoIntervalo
+	localStorage["_direcaoIntervalo"] = _direcaoIntervalo
+	localStorage["_notasBase"] = _notasBase
+	localStorage["_tipoDestaque"] = _tipoDestaque
 	
-	document.getElementById("opcoesCompletarIntervaloContainer").style.display = "none";
-	document.getElementById("keyboardContainer").style.display = "block";
+	if (completarOuIdentificar == "completar")
+		window.location.href = "completarIntervaloExecucao.html";
+	else if (completarOuIdentificar == "identificar")
+		window.location.href = "identificarIntervaloExecucao.html";
 	
-	solicitarCompletarIntervalo();
+	//document.getElementById("opcoesCompletarIntervaloContainer").style.display = "none";
+	//document.getElementById("keyboardContainer").style.display = "block";
+	
+	//solicitarCompletarIntervalo();
 }
 
 var _notaBaseSorteada = "";
@@ -225,9 +232,9 @@ var _respostaEsperada = "";
 
 function solicitarCompletarIntervalo() 
 {
-	_notaBaseSelecionada = sortearElementoArray(_notasBase);
-	_codigoIntervaloSorteado = sortearElementoArray(_tipoIntervalo);
-	_direcaoSorteada = sortearElementoArray(_direcaoIntervalo);
+	_notaBaseSelecionada = sortearElementoArray(localStorage["_notasBase"].split(","));	
+	_codigoIntervaloSorteado = sortearElementoArray(localStorage["_tipoIntervalo"].split(","));
+	_direcaoSorteada = sortearElementoArray(localStorage["_direcaoIntervalo"].split(","));
 	
 	var distancia = getDistanciaIntervaloPorCodigo(_codigoIntervaloSorteado);
 	
@@ -242,7 +249,7 @@ function solicitarCompletarIntervalo()
 	container.innerHTML = getNomeIntervaloPorCodigo(_codigoIntervaloSorteado) + ", " + _direcaoSorteada +
 	    "<div style='display:none' id='botaoProximoContainer'><input type='button' value='Próximo' onclick='javacript:clicouProximoCompletarIntervalo();'></div>";
 	
-	pressionarNotas(_notaBaseSelecionada, "yellow", _tipoDestaque);
+	pressionarNotas(_notaBaseSelecionada, "yellow", localStorage["_tipoDestaque"]);
 	
 	iniciarCronometroExercicioCompletarIntervalo();
 }
@@ -290,4 +297,108 @@ function tratarTickExercicioCompletarIntervalo(tempo)
 
 // ------------------------------------------------------------
 // COMPLETAR INTERVALO (fim)
+// ============================================================
+
+
+// ============================================================
+// IDENTIFICAR INTERVALO (ini)
+// ------------------------------------------------------------
+
+function solicitarIdentificarIntervalo() 
+{
+	limparCoresBotoesIntervalos();
+    document.getElementById("antesTecladoContainer").innerHTML = "";
+
+	
+	var notaBaseSelecionada = sortearElementoArray(localStorage["_notasBase"].split(","));	
+	var codigoIntervaloSorteado = sortearElementoArray(localStorage["_tipoIntervalo"].split(","));
+	
+	_respostaEsperada = getNomeIntervaloPorCodigo(codigoIntervaloSorteado);	
+	var distancia = getDistanciaIntervaloPorCodigo(codigoIntervaloSorteado);
+	
+	var segundaNota = todasNotasEOitavas[todasNotasEOitavas.indexOf(notaBaseSelecionada) + distancia];
+	
+	pressionarNotas(notaBaseSelecionada + "," + segundaNota, "yellow,yellow", localStorage["_tipoDestaque"]);
+	
+	iniciarCronometroExercicioIdentificarIntervalo();
+}
+
+function conferirRespostaIdentificarIntervalo(botaoResposta)
+{
+	pararCronometroExercicioIdentificarIntervalo();
+	
+	var resposta = (botaoResposta.value + "|").split("|");
+	var respostaConfere = false;
+	
+	for (var i = 0; i < resposta.length - 1; i++) 
+	{
+		respostaConfere = resposta[i].trim() == _respostaEsperada;
+		if (respostaConfere) 
+			break;
+	}	
+	
+	if (respostaConfere)
+	{
+		botaoResposta.style.backgroundColor = "lime";
+		aguardar(1000, solicitarIdentificarIntervalo);
+	}
+	else
+	{
+		//pressionarNotas(_notaBaseSelecionada + "," + resposta + "," + _respostaEsperada, "yellow,orangered,lime");
+		//document.getElementById("botaoProximoContainer").style = "display:block";
+		botaoResposta.style.backgroundColor = "orangered";
+		
+		var botoesIntervalos = document.getElementsByName("btnIntervalo");
+		for (var i = 0; i < botoesIntervalos.length; i++) 
+		{
+			resposta = (botoesIntervalos[i].value + "|").split("|");
+			respostaConfere = false;
+			
+			for (var j = 0; j < resposta.length - 1; j++) 
+			{
+				respostaConfere = resposta[j].trim() == _respostaEsperada;
+				if (respostaConfere) 
+					break;
+			}	
+			
+			if (respostaConfere) 
+			{
+				botoesIntervalos[i].style.backgroundColor = "lime";
+		        document.getElementById("antesTecladoContainer").innerHTML = "Clique na resposta certa para continuar.";
+				break;
+			}
+		}	
+	}
+}
+
+function limparCoresBotoesIntervalos()
+{
+	var botoes = document.getElementsByName("btnIntervalo");
+	
+	for (var i = 0; i < botoes.length; i++)
+	{
+		botoes[i].style.background = "white";
+	}
+}
+
+function iniciarCronometroExercicioIdentificarIntervalo() 
+{
+	_crono = iniciarCronometro(tratarTickExercicioIdentificarIntervalo);
+}
+
+function pararCronometroExercicioIdentificarIntervalo() 
+{
+	pararCronometro(_crono);
+}
+
+function tratarTickExercicioIdentificarIntervalo(tempo)
+{
+	var container = document.getElementById("aposTecladoContainer");
+	
+	container.style = "text-align: center;";
+	container.innerHTML = tempo;
+}
+
+// ------------------------------------------------------------
+// IDENTIFICAR INTERVALO (fim)
 // ============================================================
