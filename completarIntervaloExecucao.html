@@ -28,10 +28,18 @@
                 console.log("id = " + sender.id);
                 conferirResposta(sender.id.replace("note", ""));
             }
+		
+	    function resetZoom()
+		{
+			var scale = 'scale(1)';
+			document.body.style.webkitTransform =  scale;    // Chrome, Opera, Safari
+			 document.body.style.msTransform =   scale;       // IE 9
+			 document.body.style.transform = scale;  
+		}
         </script>
     </head>
     
-    <body onload="solicitarCompletarIntervalo(); alert(document.body.style.zoom);">
+    <body onload="solicitarCompletarIntervalo(); ">
         <main id="content" class="main-content" role="main">
             <div id="keyboardContainer"></div><!-- this will hold the keyboard -->
 		</main>
