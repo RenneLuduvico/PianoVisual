@@ -4,16 +4,34 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://renneluduvico.github.io/PianoVisual/assets/css/style.css?v=711d42d6ed9e5ebf6ca46199a14e506a041a5f94">
-        <title>Completar Intervalo - Opções</title>
+        <title>Intervalo - Opções</title>
         
         <script src="exercicios.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		
+        <script type="text/javascript">
+            $( document ).ready(function() {
+				var url = new URL(window.location.href);
+				var paramValue = url.searchParams.get("acao");
+				
+				if (paramValue == "completar") 
+				{					
+					$("#titulo").html("Completar intervalo");
+					$("#botaoAcaoContainer").html("<input type=\"button\" value=\"Iniciar\" onclick=\"javascript:iniciarCompletarOuIdentificarIntervalo('completar');\">");
+				}
+				else if (paramValue == "identificar") 
+				{					
+					$("#titulo").html("Identificar intervalo");
+					$("#botaoAcaoContainer").html("<input type=\"button\" value=\"Iniciar\" onclick=\"javascript:iniciarCompletarOuIdentificarIntervalo('identificar');\">");
+				}
+            });
+        </script>
     </head>
-     
+    
     <body>
         <main id="content" class="main-content" role="main">
             <div style="display:block" id="opcoesCompletarIntervaloContainer" padding="10px">
-                <h2>COMPLETAR INTERVALO</h2>
+                <h2 id="titulo"></h2>
 				<fieldset>
 					<legend>Tipo de intervalo</legend>
 					<div style="float:left; width:50%">
@@ -137,8 +155,7 @@
 					</div>
 				</fieldset>
 				<br/>
-				<input type="button" value="Iniciar completar" onclick="javascript:iniciarCompletarOuIdentificarIntervalo('completar');">
-				<input type="button" value="Iniciar identificar" onclick="javascript:iniciarCompletarOuIdentificarIntervalo('identificar');">
+				<div id="botaoAcaoContainer"></div>
             </div>
         </main>
     </body>
