@@ -245,13 +245,14 @@ function solicitarCompletarIntervalo()
 	
 	var container = document.getElementById("antesTecladoContainer")
 	
-	container.style = "text-align: center;";
-	container.innerHTML = getNomeIntervaloPorCodigo(_codigoIntervaloSorteado) + ", " + _direcaoSorteada +
-	    "<div style='display:none' id='botaoProximoContainer'><input type='button' value='Próximo' onclick='javacript:clicouProximoCompletarIntervalo();'></div>";
+	container.style = "text-align: left;";
+	container.innerHTML = "<span style='color: #159957'>Complete o intervalo com uma </span>" +
+	    "<span style='color: blue'>" + getNomeIntervaloPorCodigo(_codigoIntervaloSorteado) + 
+		"</span>, <span style='color: orange'>" + _direcaoSorteada.replace("asc", "ascendente").replace("desc", "descendente") + "</span>";
 	
 	pressionarNotas(_notaBaseSelecionada, "yellow", localStorage["_tipoDestaque"]);
 	
-	iniciarCronometroExercicioCompletarIntervalo();
+	// iniciarCronometroExercicioCompletarIntervalo();
 }
 
 function clicouProximoCompletarIntervalo() 
@@ -272,7 +273,7 @@ function conferirResposta(resposta)
 	else
 	{
 		pressionarNotas(_notaBaseSelecionada + "," + resposta + "," + _respostaEsperada, "yellow,orangered,lime");
-		document.getElementById("botaoProximoContainer").style = "display:block";
+		document.getElementById("antesTecladoContainer").innerHTML = "<span style='color: orangered'>Clique na resposta correta para continuar.</span>"
 	}
 }
 
