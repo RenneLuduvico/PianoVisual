@@ -22,8 +22,18 @@
                 //when keys are pressed updatePreview() is called
                 //bindKeysToFunction(clicouNota)
                 //set the default clef to G4
-                setSelectedClef(clefs.G4)
+                setSelectedClef(clefs.G4)	
+				
             })
+			
+			function ajustarBotoes()
+			{
+				var container  = document.getElementById("aposTecladoContainer");
+				
+				container.innerHTML = document.getElementById("botoesContainer").innerHTML;
+				
+				document.getElementById("botoesContainer").remove();
+			}
 
 			/*
             function clicouNota(sender, paeNote) {
@@ -32,29 +42,45 @@
             }
 			*/
         </script>
+		
+		<style>
+			.botaoResposta {
+				display: table-cell; 
+				padding: 2px; 
+				vertical-align: middle; 
+				border-style: solid; 
+				border-width: 1px;
+				border-color: gray;
+				height: 33px;
+				width: 102px;
+				cursor: pointer;
+			}
+		</style>
     </head>
     
-    <body onload="solicitarIdentificarIntervalo()">
+    <body onload="ajustarBotoes(); solicitarIdentificarIntervalo();">
         <main id="content" class="main-content" role="main">
             <div id="keyboardContainer"></div><!-- this will hold the keyboard -->
-			<div style="display: table; width:100%;">
-				<div style="display: table-row-group;" >
-					<div style="display: table-row; ">
-						<div style="display: table-cell; padding: 5px" ><input type="button" name="btnIntervalo" value="2a. menor" style="width: 100%; height:30px" onclick="conferirRespostaIdentificarIntervalo(this);"></input></div>
-						<div style="display: table-cell; padding: 5px" ><input type="button" name="btnIntervalo" value="2a. maior" style="width: 100%; height:30px" onclick="conferirRespostaIdentificarIntervalo(this);"></input></div>
-						<div style="display: table-cell; padding: 5px" ><input type="button" name="btnIntervalo" value="3a. menor" style="width: 100%; height:30px" onclick="conferirRespostaIdentificarIntervalo(this);"></input></div>
-						<div style="display: table-cell; padding: 5px" ><input type="button" name="btnIntervalo" value="3a. maior" style="width: 100%; height:30px" onclick="conferirRespostaIdentificarIntervalo(this);"></input></div>
-					</div>
-					<div style="display: table-row; ">
-						<div style="display: table-cell; padding: 5px" ><input type="button" name="btnIntervalo" value="4a. justa" style="width: 100%; height:30px" onclick="conferirRespostaIdentificarIntervalo(this);"></input></div>
-						<div style="display: table-cell; padding: 5px" ><input type="button" name="btnIntervalo" value="4a. aumentada | 5a. diminuta" style="width: 100%; height:30px" onclick="conferirRespostaIdentificarIntervalo(this);"></input></div>
-						<div style="display: table-cell; padding: 5px" ><input type="button" name="btnIntervalo" value="5a. justa" style="width: 100%; height:30px" onclick="conferirRespostaIdentificarIntervalo(this);"></input></div>
-						<div style="display: table-cell; padding: 5px" ><input type="button" name="btnIntervalo" value="5a. aumentada | 6a. menor" style="width: 100%; height:30px" onclick="conferirRespostaIdentificarIntervalo(this);"></input></div>
-					</div>
-					<div style="display: table-row; ">
-						<div style="display: table-cell; padding: 5px" ><input type="button" name="btnIntervalo" value="6a. maior" style="width: 100%; height:30px" onclick="conferirRespostaIdentificarIntervalo(this);"></input></div>
-						<div style="display: table-cell; padding: 5px" ><input type="button" name="btnIntervalo" value="6a. aumentada | 7a. menor" style="width: 100%; height:30px" onclick="conferirRespostaIdentificarIntervalo(this);"></input></div>
-						<div style="display: table-cell; padding: 5px" ><input type="button" name="btnIntervalo" value="7a. maior" style="width: 100%; height:30px" onclick="conferirRespostaIdentificarIntervalo(this);"></input></div>
+			<div id="botoesContainer">
+				<div style="display: table; width:100%; border-collapse:separate;border-spacing:3px;">
+					<div style="display: table-row-group;" >
+						<div style="display: table-row; ">
+							<div name="btnIntervalo" class="botaoResposta" onclick="conferirRespostaIdentificarIntervalo(this);"><span style="color: green">SEGUNDA menor</span></div>
+							<div name="btnIntervalo" class="botaoResposta" onclick="conferirRespostaIdentificarIntervalo(this);"><span style="color: green">SEGUNDA maior</span></div>
+							<div name="btnIntervalo" class="botaoResposta" onclick="conferirRespostaIdentificarIntervalo(this);"><span style="color: SandyBrown ">TERÇA menor</span></div>
+							<div name="btnIntervalo" class="botaoResposta" onclick="conferirRespostaIdentificarIntervalo(this);"><span style="color: SandyBrown ">TERÇA maior</span></div>
+						</div>
+						<div style="display: table-row; ">
+							<div name="btnIntervalo" class="botaoResposta" onclick="conferirRespostaIdentificarIntervalo(this);"><span style="color: red; ">QUARTA justa</span></div>
+							<div name="btnIntervalo" class="botaoResposta"  onclick="conferirRespostaIdentificarIntervalo(this);"><span style="color: red">QUARTA aumentada</span><br/><span style="color: blue">QUINTA diminuta</span></div>
+							<div name="btnIntervalo" class="botaoResposta" onclick="conferirRespostaIdentificarIntervalo(this);"><span style="color: blue">QUINTA justa</span></div>
+							<div name="btnIntervalo" class="botaoResposta"  onclick="conferirRespostaIdentificarIntervalo(this);"><span style="color: blue">QUINTA aumentada</span><br/><span style="color: orange">SEXTA menor</span></div>
+						</div>
+						<div style="display: table-row; ">
+							<div name="btnIntervalo" class="botaoResposta" onclick="conferirRespostaIdentificarIntervalo(this);"><span style="color: orange">SEXTA maior</span></div>
+							<div name="btnIntervalo" class="botaoResposta"  onclick="conferirRespostaIdentificarIntervalo(this);"><span style="color: orange">SEXTA aumentada</span><br/><span style="color: gray">SÉTIMA menor</span></div>
+							<div name="btnIntervalo" class="botaoResposta"  onclick="conferirRespostaIdentificarIntervalo(this);"><span style="color: gray">SÉTIMA maior</span></div>
+						</div>
 					</div>
 				</div>
 			</div>
