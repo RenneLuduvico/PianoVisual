@@ -246,3 +246,12 @@ ul.DA-PianoKeyboard li:last-of-type {
     -moz-column-count: 4; /* Firefox */
     column-count: 4;
 }
+
+ .blink {
+	animation: blinker 1s linear infinite;
+	color: #159957;
+}
+
+@keyframes blinker {  
+	80% { opacity: 0; }
+}
