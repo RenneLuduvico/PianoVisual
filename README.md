@@ -6,7 +6,7 @@
 
 ## Exercícios com Acordes
 
-[Ditado de acordes 1](/PianoVisual/ditadoOpcoes.html?acao=ditado1): Execute ao piano o acorde solicitado e confira o resultado na tela.
+[Ditado de acordes 1](/PianoVisual/acordeOpcoes.html?acao=ditado1): Execute ao piano o acorde solicitado e confira o resultado na tela.
 
 [Ditado de acordes 2](/PianoVisual/ditadoOpcoes.html?acao=ditado2): Forme o acorde solicitado no teclado apresentado na tela.
 
