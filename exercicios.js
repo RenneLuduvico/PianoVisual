@@ -8,23 +8,6 @@ var todasNotasEOitavas = [
 	"C7", "C#7|Db7", "D7", "D#7|Eb7", "E7", "F7", "F#7|Gb7", "G7", "G#7|Ab7", "A7", "A#7|Bb7", "B7"
 ];
 
-var nomesIntervalosOLD = [
-	"2a. menor", 
-	"2a. maior", 
-	"3a. menor", 
-	"3a. maior", 
-	"4a. justa", 
-	"4a. aumentada", 
-	"5a. diminuta", 
-	"5a. justa", 
-	"5a. aumentada",
-	"6a. menor",
-	"6a. maior",
-	"6a. aumentada",
-	"7a. menor",
-	"7a. maior"
-];
-
 var nomesIntervalos = [
 	"SEGUNDA menor", 
 	"SEGUNDA maior", 
@@ -76,6 +59,17 @@ var distanciaIntervalos =  [
 	11
 ];
 
+var tipoAcordes = [
+	"Maior",
+	"Menor"
+];
+
+var posicoesAcordes = [
+	"Posição fundamental",
+	"Primeira inversão",
+	"Segunda inversão"
+]
+
 
 // ============================================================
 // UTIL
@@ -113,7 +107,6 @@ function getIndiceNotaEOitava (notaEOitava)
 
 function getNotaIntervalo(notaEOitavaBase, nomeIntervalo) 
 {
-	console.log(notaEOitavaBase + "," + nomeIntervalo)
 	var indNota = todasNotasEOitavas.indexOf(notaEOitavaBase)
 	var indIntervalo = nomesIntervalos.indexOf(nomeIntervalo)
 	
@@ -235,11 +228,6 @@ function iniciarCompletarOuIdentificarIntervalo(completarOuIdentificar)
 		window.location.href = "completarIntervaloExecucao.html";
 	else if (completarOuIdentificar == "identificar")
 		window.location.href = "identificarIntervaloExecucao.html";
-	
-	//document.getElementById("opcoesCompletarIntervaloContainer").style.display = "none";
-	//document.getElementById("keyboardContainer").style.display = "block";
-	
-	//solicitarCompletarIntervalo();
 }
 
 var _notaBaseSorteada = "";
@@ -426,4 +414,189 @@ function tratarTickExercicioIdentificarIntervalo(tempo)
 
 // ------------------------------------------------------------
 // IDENTIFICAR INTERVALO (fim)
+// ============================================================
+
+
+// ============================================================
+// ACORDES - GERAL (ini)
+// ------------------------------------------------------------
+function getRegraFormacaoAcorde(tipoAcorde, posicao)
+{
+	if (posicao == "Posição fundamental")
+	{
+		if (tipoAcorde == "Maior")
+			return "0,4,7";
+		else if (tipoAcorde == "Menor")
+			return "0,3,7";
+		return "";
+	}
+	else if (posicao == "Primeira inversão")
+	{
+		if (tipoAcorde == "Maior")
+			return "-8,-5,0";
+		else if (tipoAcorde == "Menor")
+			return "-9,-5,0";
+		return "";
+	}
+	else if (posicao == "Segunda inversão")
+	{
+		if (tipoAcorde == "Maior")
+			return "-5,0,4";
+		else if (tipoAcorde == "Menor")
+			return "-5,0,3";
+		return "";
+	}
+}
+
+function getNotasAcorde(notaBase, tipoAcorde, posicao) 
+{
+	var result = [];
+	var arrRegra = getRegraFormacaoAcorde(tipoAcorde, posicao).split(",");	
+	
+	var indNotaBase = todasNotasEOitavas.indexOf(notaBase);
+	
+	for (var i = 0; i < arrRegra.length; i++) 
+	{
+		result.push(todasNotasEOitavas[(indNotaBase + parseInt(arrRegra[i]))]);
+	}	
+	return result.toString();
+}
+
+// ------------------------------------------------------------
+// ACORDES - GERAL (fim)
+// ============================================================
+
+
+// ============================================================
+// DITADO DE ACORDES 1 (ini)
+// ------------------------------------------------------------
+function iniciarDitadoAcordes1() 
+{
+	var notasBase = []; // array com as notas selecionadas, já com as oitavas
+	var tiposAcorde = []; // (array com os tipos de acorde selecionados)
+	var posicoesAcorde = []; // (array com as posições de acorde selecionadas)
+
+	var chkNotas = document.getElementsByName("chkNotas");
+	var chkTipoAcorde = document.getElementsByName("chkTipoAcorde");
+	var chkPosicaoAcorde = document.getElementsByName("chkPosicaoAcorde");
+	var txtTempoEntreAcordes = document.getElementById("txtTempoEntreAcordes");
+	var radCoresIguais = document.getElementById("radCoresIguais");
+
+	for (var i = 0; i < chkNotas.length; i++) 
+	{
+		if (chkNotas[i].checked) 
+		{
+			notasBase.push(chkNotas[i].value.replace("|", "4|") + "4");
+		}			
+	}
+
+	for (var i = 0; i < chkTipoAcorde.length; i++)
+	{
+		if (chkTipoAcorde[i].checked)
+		{
+			tiposAcorde.push(chkTipoAcorde[i].value);
+		}
+	}
+	
+	for (var i = 0; i < chkPosicaoAcorde.length; i++)
+	{
+		if (chkPosicaoAcorde[i].checked)
+		{
+			posicoesAcorde.push(chkPosicaoAcorde[i].value);
+		}
+	}	
+	
+	if (notasBase.length == 0)
+	{
+		alert("Selecione ao menos uma nota base.");
+		return;
+	}
+
+	if (tiposAcorde.length == 0) 
+	{
+		alert("Selecione ao menos um tipo de acorde.");
+		return;
+	}
+	
+	if (posicoesAcorde.length == 0) 
+	{
+		alert("Selecione ao menos uma posição.");
+		return;
+	}
+	
+	localStorage["notasBase"] = notasBase
+	localStorage["tiposAcorde"] = tiposAcorde;
+	localStorage["posicoesAcorde"] = posicoesAcorde;
+	localStorage["tempoEntreAcordes"] = txtTempoEntreAcordes.value;
+	localStorage["coresIguais"] = radCoresIguais.checked;
+	
+	window.location.href = "ditadoAcordes1Execucao.html";
+}
+
+var _notaBaseAtual = "?";
+var _notaBaseApresentacaoAtual = "?";
+var _tipoAcordeAtual = "?";
+var _posicaoAcordeAtual = "?";
+function solicitarDitadoAcordes1() 
+{
+	var notaBaseSorteada = sortearElementoArray(localStorage["notasBase"].split(","));	
+	var tipoAcordeSorteado = sortearElementoArray(localStorage["tiposAcorde"].split(","));
+	var posicaoAcordeSorteado = sortearElementoArray(localStorage["posicoesAcorde"].split(","));
+	var tempoEntreAcordes = parseInt(localStorage["tempoEntreAcordes"]);	
+	
+	if (_notaBaseAtual != "?") 
+	{
+		var notasAcorde = getNotasAcorde(_notaBaseAtual, _tipoAcordeAtual, _posicaoAcordeAtual);	
+		var cores = "";
+		
+		if (localStorage["coresIguais"] == "true")
+		{
+			cores = "lime";
+		}
+		else
+		{
+			if (_posicaoAcordeAtual == "Posição fundamental") 
+				cores = "lime,yellow,cyan";
+			else if (_posicaoAcordeAtual == "Primeira inversão") 
+				cores = "yellow,cyan, lime";
+			else if (_posicaoAcordeAtual == "Segunda inversão") 
+				cores = "cyan,lime,yellow";
+		}
+		
+		pressionarNotas(notasAcorde, cores, localStorage["_tipoDestaque"]);	
+	}
+
+	var notaBaseApresentacao = notaBaseSorteada;
+	if (notaBaseApresentacao.includes("|"))
+	{
+		var auxNotaBase = notaBaseApresentacao.split("|");
+		notaBaseApresentacao = sortearElementoArray(auxNotaBase);
+	}
+	
+	notaBaseApresentacao = notaBaseApresentacao.substring(0, notaBaseApresentacao.length - 1);
+	
+	if (tipoAcordeSorteado == "Menor")
+	{
+		notaBaseApresentacao += "m";
+	}
+	
+	var containerApos = document.getElementById("aposTecladoContainer")
+	containerApos.style = "text-align: left;";
+	containerApos.innerHTML = "<span class='blink'>Próximo acorde: </span><span style='color: blue'>" + notaBaseApresentacao + "</span>, <span style='color: orange'>" + posicaoAcordeSorteado.toLowerCase() + "</span>";
+
+	var containerAntes = document.getElementById("antesTecladoContainer")
+	containerAntes.style = "text-align: left;";
+	containerAntes.innerHTML = "<span style='color: #159957'>Acorde atual: </span><span style='color: blue'>" + _notaBaseApresentacaoAtual + "</span>, <span style='color: orange'>" + _posicaoAcordeAtual.toLowerCase() + "</span>";
+	
+	_notaBaseAtual = notaBaseSorteada;
+	_notaBaseApresentacaoAtual = notaBaseApresentacao;
+	_tipoAcordeAtual = tipoAcordeSorteado;
+	_posicaoAcordeAtual = posicaoAcordeSorteado;
+	
+    aguardar(tempoEntreAcordes * 1000, solicitarDitadoAcordes1);
+}
+
+
+// ------------------------------------------------------------
+// DITADO DE ACORDES 1 (fim)
 // ============================================================
