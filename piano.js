@@ -407,6 +407,7 @@ var codigosNotas = ["C", "C#|Db", "D", "D#|Eb", "E", "F", "F#|Gb", "G", "G#|Ab",
 function soltarTodasNotas() {
 	var notaOitava = ""
 	
+	// Destaque na nota
 	for (i = 1; i <= 7; i++) 
 	{
 		for (j = 0; j < 12; j++) 
@@ -418,31 +419,29 @@ function soltarTodasNotas() {
 				if (notaOitava.includes("|")) 
 				{
 					elementoNota.style.backgroundColor = "black"
-					/*
-					if (notaOitava.includes("C#") || notaOitava.includes("F#")) 
-					    elementoNota.className = "blackKeyCF"
-					else if (notaOitava.includes("D#") || notaOitava.includes("A#")) 
-						elementoNota.className = "blackKeyDA"
-					else
-						elementoNota.className = "blackKeyG"
-					*/
 				}
 				else
 				{
 					elementoNota.style.backgroundColor = "white"
-
-					// elementoNota.className = "whiteKey"
 				}
 			}
 		}			
 	}
+	
+	// Círculo
+	for (var i = 0; i < marcadoresNotaCirculo.length; i++) 
+	{
+		marcadoresNotaCirculo[i].remove();
+	}		
+	marcadoresNotaCirculo
 }
 
+var marcadoresNotaCirculo = [];
 function criarMarcadorNota(cor) {
   var d = document.createElement("DIV");
-  //d.id = "marcadorNota";
   d.style = "background:" + cor + "; position:absolute; height:16px; width:16px; z-index:40;border: 1px solid gray; border-radius:11px";
   document.body.appendChild(d);
+  marcadoresNotaCirculo.push(d);
   return d;
 }
 
