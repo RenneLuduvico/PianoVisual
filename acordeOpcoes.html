@@ -1,0 +1,135 @@
+ <!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://renneluduvico.github.io/PianoVisual/assets/css/style.css?v=711d42d6ed9e5ebf6ca46199a14e506a041a5f94">
+        <title>Intervalo - Opções</title>
+        
+        <script src="exercicios.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		
+        <script type="text/javascript">
+            $( document ).ready(function() {
+				var url = new URL(window.location.href);
+				var paramValue = url.searchParams.get("acao");
+				
+				if (paramValue == "ditado1") 
+				{					
+					$("#titulo").html("Ditado de acordes");
+					$("#botaoAcaoContainer").html("<input type=\"button\" value=\"Iniciar\" onclick=\"javascript:iniciarDitadoAcordes1('ditado1');\">");
+				}
+				else if (paramValue == "identificar") 
+				{					
+					$("#titulo").html("Identificar intervalo");
+					$("#botaoAcaoContainer").html("<input type=\"button\" value=\"Iniciar\" onclick=\"javascript:iniciarCompletarOuIdentificarIntervalo('identificar');\">");
+				}
+            });
+        </script>
+    </head>
+    
+    <body>
+        <main id="content" class="main-content" role="main">
+            <div style="display:block" id="opcoesCompletarIntervaloContainer" padding="10px">
+                <h2 id="titulo"></h2>
+				<p>Selecione as opções para este exercício e clique em "Iniciar".</p>
+				<fieldset>
+					<legend>Nota base</legend>
+					<div style="float:left; width:50%">
+						<input type="checkbox" id="chkGrupoNotasTeclasBrancas" name="chkGrupoNotas" value="asc" checked onclick="javascript:SelecionarTeclasBrancasOuPretas()">
+						<label for="chkGrupoNotasTeclasBrancas">Teclas brancas</label>
+						<br/>
+						<br/>
+						<input type="checkbox" id="chkNotaC" name="chkNotas" value="C" checked>
+						<label for="chkNotaC">C</label>
+						<br/>
+						<input type="checkbox" id="chkNotaD" name="chkNotas" value="D" checked>
+						<label for="chkNotaD">D</label>
+						<br/>
+						<input type="checkbox" id="chkNotaE" name="chkNotas" value="E" checked>
+						<label for="chkNotaE">E</label>
+						<br/>
+						<input type="checkbox" id="chkNotaF" name="chkNotas" value="F" checked>
+						<label for="chkNotaF">F</label>
+						<br/>
+						<input type="checkbox" id="chkNotaG" name="chkNotas" value="G" checked>
+						<label for="chkNotaG">G</label>
+						<br/>
+						<input type="checkbox" id="chkNotaA" name="chkNotas" value="A" checked>
+						<label for="chkNotaA">A</label>
+						<br/>
+						<input type="checkbox" id="chkNotaB" name="chkNotas" value="B" checked>
+						<label for="chkNotaB">B</label>                    
+					</div>
+					<div style="float:left; width:50%">
+						<input type="checkbox" id="chkGrupoNotasTeclasPretas" name="chkGrupoNotas" value="desc" checked onclick="javascript:SelecionarTeclasBrancasOuPretas()">
+						<label for="chkGrupoNotasTeclasPretas">Teclas pretas</label>                    
+						<br/>
+						<br/>
+						<input type="checkbox" id="chkNotaCsDb" name="chkNotas" value="C#|Db" checked>
+						<label for="chkNotaCsDb">C#|Db</label>
+						<br/>
+						<input type="checkbox" id="chkNotaDsEb" name="chkNotas" value="D#|Eb" checked>
+						<label for="chkNotaDsEb">D#|Eb</label>
+						<br/>
+						<input type="checkbox" id="chkNotaFsGb" name="chkNotas" value="F#|Gb" checked>
+						<label for="chkNotaFsGb">F#|Gb</label>
+						<br/>
+						<input type="checkbox" id="chkNotaGsAb" name="chkNotas" value="G#|Ab" checked>
+						<label for="chkNotaGsAb">G#|Ab</label>
+						<br/>
+						<input type="checkbox" id="chkNotaAsBb" name="chkNotas" value="A#|Bb" checked>
+						<label for="chkNotaAsBb">A#|Bb</label>
+					</div>
+				</fieldset>
+				<br/>
+				<fieldset>
+					<legend>Tipo de acorde</legend>
+					<div style="float:left; width:50%">
+						<input type="checkbox" id="chkTipoAcordeMaior" name="chkTipoAcorde" value="Maior" checked>
+						<label for="chkTipoAcordeMaior">Maior</label>
+					</div>					
+					<div style="float:left; width:50%">
+						<input type="checkbox" id="chkTipoAcordeMenor" name="chkTipoAcorde" value="Menor" checked>
+						<label for="chkTipoAcordeMenor">Menor</label>
+					</div>					
+				</fieldset>
+				<br/>
+				<fieldset>
+					<legend>Posição</legend>
+					<div style="float:left; width:50%">
+						<input type="checkbox" id="chkPosicaoAcordeFundamental" name="chkPosicaoAcorde" value="Posição fundamental" checked>
+						<label for="chkPosicaoAcordeFundamental">Fundamental</label>
+						<br/>
+						<input type="checkbox" id="chkPosicaoAcordePrimeiraInversao" name="chkPosicaoAcorde" value="Primeira inversão" checked>
+						<label for="chkPosicaoAcordePrimeiraInversao">Primeira inversão</label>
+					</div>					
+					<div style="float:left; width:50%">
+						<input type="checkbox" id="chkPosicaoAcordeSegundaInversao" name="chkPosicaoAcorde" value="Segunda inversão" checked>
+						<label for="chkPosicaoAcordeSegundaInversao">Segunda inversão</label>
+					</div>					
+				</fieldset>
+				<br/>
+				<fieldset>
+					<legend>Cores das teclas</legend>
+					<div style="float:left; width:50%">
+						<input type="radio" id="radCoresIguais" name="chkCoresIguais" value="CoresIguais" checked>
+						<label for="radCoresIguais"><span  style="background: lime">Fundamental</span>, <span  style="background: lime">Terça</span>, <span  style="background: lime">Quinta</span></label>
+						<br/>
+					</div>					
+					<div style="float:left; width:50%">
+						<input type="radio" id="radCoresDiferentes" name="chkCoresIguais" value="CoresDiferentes">
+						<label for="radCoresDiferentes"><span  style="background: lime">Fundamental</span>, <span  style="background: yellow">Terça</span>, <span  style="background: cyan">Quinta</span></label>
+					</div>					
+				</fieldset>
+				<br/>
+				<fieldset>
+					<legend>Tempo de espera entre os acordes</legend>
+					<input type="text" id="txtTempoEntreAcordes" maxlength="3" size="3" value="5"/> segundos
+				</fieldset>
+				<br/>
+				<div id="botaoAcaoContainer"></div>
+            </div>
+        </main>
+    </body>
+</html>
