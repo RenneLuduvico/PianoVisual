@@ -10,4 +10,4 @@
 
 [Ditado de acordes 2](/PianoVisual/ditadoOpcoes.html?acao=ditado2): Forme o acorde solicitado no teclado apresentado na tela.
 
-[Identificar acorde](/PianoVisual/ditadoOpcoes.html?acao=identificar): Identifique o acorde apresentado na tela.
+[Identificar acorde](/PianoVisual/acordeOpcoes.html?acao=identificar): Identifique o acorde apresentado na tela.
