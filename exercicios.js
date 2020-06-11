@@ -80,6 +80,19 @@ function sortearElementoArray(arr)
 	return arr[Math.floor(Math.random() * arr.length)];
 }
 
+function removerOitava(notaEOitava)
+{
+	var result = notaEOitava.replace(/1/g,"");
+	result = result.replace(/2/g,"");
+	result = result.replace(/3/g,"");
+	result = result.replace(/4/g,"");
+	result = result.replace(/5/g,"");
+	result = result.replace(/6/g,"");
+	result = result.replace(/7/g,"");
+	
+	return result;
+}
+
 // ------------------------------------------------------------
 // UTIL
 // ============================================================
@@ -300,7 +313,7 @@ function tratarTickExercicioCompletarIntervalo(tempo)
 {
 	var container = document.getElementById("aposTecladoContainer");
 	
-	container.style = "text-align: center;";
+	container.style = "text-align: center; font-size: larger";
 	container.innerHTML = tempo;
 }
 
@@ -408,7 +421,7 @@ function tratarTickExercicioIdentificarIntervalo(tempo)
 {
 	var container = document.getElementById("aposTecladoContainer");
 	
-	container.style = "text-align: center;";
+	container.style = "text-align: center; font-size: larger;";
 	container.innerHTML = tempo;
 }
 
@@ -580,11 +593,11 @@ function solicitarDitadoAcordes1()
 		notaBaseApresentacao += "m";
 	}
 	
-	var containerApos = document.getElementById("aposTecladoContainer")
-	containerApos.style = "text-align: left;";
+	var containerApos = document.getElementById("aposTecladoContainer");
+	containerApos.style = "text-align: left; font-size: larger;";
 	containerApos.innerHTML = "<span class='blink'>Próximo acorde: </span><span style='color: blue'>" + notaBaseApresentacao + "</span>, <span style='color: orange'>" + posicaoAcordeSorteado.toLowerCase() + "</span>";
 
-	var containerAntes = document.getElementById("antesTecladoContainer")
+	var containerAntes = document.getElementById("antesTecladoContainer");
 	containerAntes.style = "text-align: left;";
 	containerAntes.innerHTML = "<span style='color: #159957'>Acorde atual: </span><span style='color: blue'>" + _notaBaseApresentacaoAtual + "</span>, <span style='color: orange'>" + _posicaoAcordeAtual.toLowerCase() + "</span>";
 	
@@ -599,4 +612,134 @@ function solicitarDitadoAcordes1()
 
 // ------------------------------------------------------------
 // DITADO DE ACORDES 1 (fim)
+// ============================================================
+
+
+
+// ============================================================
+// IDENTIFICAR ACORDE (ini)
+// ------------------------------------------------------------
+function iniciarIdentificarAcorde() 
+{
+	var notasBase = []; // array com as notas selecionadas, já com as oitavas
+	var tiposAcorde = []; // (array com os tipos de acorde selecionados)
+	var posicoesAcorde = []; // (array com as posições de acorde selecionadas)
+
+	var chkNotas = document.getElementsByName("chkNotas");
+	var chkTipoAcorde = document.getElementsByName("chkTipoAcorde");
+	var chkPosicaoAcorde = document.getElementsByName("chkPosicaoAcorde");
+
+	for (var i = 0; i < chkNotas.length; i++) 
+	{
+		if (chkNotas[i].checked) 
+		{
+			notasBase.push(chkNotas[i].value.replace("|", "4|") + "4");
+		}			
+	}
+
+	for (var i = 0; i < chkTipoAcorde.length; i++)
+	{
+		if (chkTipoAcorde[i].checked)
+		{
+			tiposAcorde.push(chkTipoAcorde[i].value);
+		}
+	}
+	
+	for (var i = 0; i < chkPosicaoAcorde.length; i++)
+	{
+		if (chkPosicaoAcorde[i].checked)
+		{
+			posicoesAcorde.push(chkPosicaoAcorde[i].value);
+		}
+	}	
+	
+	if (notasBase.length == 0)
+	{
+		alert("Selecione ao menos uma nota base.");
+		return;
+	}
+
+	if (tiposAcorde.length == 0) 
+	{
+		alert("Selecione ao menos um tipo de acorde.");
+		return;
+	}
+	
+	if (posicoesAcorde.length == 0) 
+	{
+		alert("Selecione ao menos uma posição.");
+		return;
+	}
+	
+	localStorage["notasBase"] = notasBase
+	localStorage["tiposAcorde"] = tiposAcorde;
+	localStorage["posicoesAcorde"] = posicoesAcorde;
+	
+	window.location.href = "identificarAcordeExecucao.html";
+}
+
+function solicitarIdentificarAcorde() 
+{
+	limparCoresBotoesAcordes();
+    document.getElementById("antesTecladoContainer").innerHTML = "";
+	
+	var notaBaseSorteada = sortearElementoArray(localStorage["notasBase"].split(","));	
+	var tipoAcordeSorteado = sortearElementoArray(localStorage["tiposAcorde"].split(","));
+	var posicaoAcordeSorteado = sortearElementoArray(localStorage["posicoesAcorde"].split(","));
+	
+	var notasAcorde = getNotasAcorde(notaBaseSorteada, tipoAcordeSorteado, posicaoAcordeSorteado);
+    pressionarNotas(notasAcorde, 'lime', localStorage["_tipoDestaque"]);	
+
+	_respostaEsperada = removerOitava(notaBaseSorteada);
+	
+	if (tipoAcordeSorteado == "Menor")
+	{
+		_respostaEsperada = _respostaEsperada.replace("|", "m|") + "m";
+	}
+	
+	var container = document.getElementById("antesTecladoContainer")
+	
+	container.style = "text-align: left;";
+	container.innerHTML = "<span style='color: #159957'>Identifique o acorde. </span>";
+}
+
+function conferirRespostaIdentificarAcorde(botaoResposta)
+{
+	var resposta = botaoResposta.innerText.replace("\n", "|");
+	
+	if (resposta == _respostaEsperada)
+	{
+		botaoResposta.style.backgroundColor = "lime";
+		aguardar(1000, solicitarIdentificarAcorde);
+	}
+	else
+	{
+		botaoResposta.style.backgroundColor = "orangered";
+		
+		var botoesAcorde = document.getElementsByName("btnAcorde");
+		for (var i = 0; i < botoesAcorde.length; i++) 
+		{
+			resposta = botoesAcorde[i].innerText.replace("\n", "|");
+			
+			if (resposta == _respostaEsperada) 
+			{
+				botoesAcorde[i].style.backgroundColor = "lime";
+		        document.getElementById("antesTecladoContainer").innerHTML = "<span style='color: orangered'>Clique na resposta correta para continuar. </span>";
+				break
+			}
+		}	
+	}
+}
+
+function limparCoresBotoesAcordes()
+{
+	var botoes = document.getElementsByName("btnAcorde");
+	
+	for (var i = 0; i < botoes.length; i++)
+	{
+		botoes[i].style.background = "white";
+	}
+}
+// ------------------------------------------------------------
+// IDENTIFICAR ACORDE (fim)
 // ============================================================
