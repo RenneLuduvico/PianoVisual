@@ -1,0 +1,105 @@
+ <!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="piano_style.css">
+        <title>Selecionar exercício</title>
+        
+        <script src="exercicios.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="piano.js"></script>
+        <script src="timer.js"></script>
+
+
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                //create piano with 3 octaves, starting at C4 (lowest key)
+                //shows labels and octave shift buttons
+                var keyboardHTML = htmlForKeyboardWithOctaves(3, octaves.C3, true, false, false, false)
+                //render the keyboard in the div
+                $("#keyboardContainer").html(keyboardHTML)
+                //when keys are pressed updatePreview() is called
+                //bindKeysToFunction(clicouNota)
+                //set the default clef to G4
+                setSelectedClef(clefs.G4)	
+				
+            })
+			
+			function ajustarBotoes()
+			{
+				var container  = document.getElementById("aposTecladoContainer");
+				
+				container.innerHTML = document.getElementById("botoesContainer").innerHTML;
+				
+				document.getElementById("botoesContainer").remove();
+			}
+
+			/*
+            function clicouNota(sender, paeNote) {
+                console.log("id = " + sender.id);
+                conferirResposta(sender.id.replace("note", ""));
+            }
+			*/
+        </script>
+		
+		<style>
+			.botaoResposta {
+				display: table-cell; 
+				padding: 2px; 
+				vertical-align: middle; 
+				border-style: solid; 
+				border-width: 1px;
+				border-color: gray;
+				height: 33px;
+				cursor: pointer;
+				-webkit-user-select: none; /* Safari */
+				-ms-user-select: none; /* IE 10+ and Edge */
+				user-select: none; /* Standard syntax */
+			}
+		</style>
+    </head>
+    
+    <body onload="ajustarBotoes(); solicitarIdentificarAcorde();">
+        <main id="content" class="main-content" role="main">
+            <div id="keyboardContainer"></div><!-- this will hold the keyboard -->
+			<div id="botoesContainer">
+				<div style="display: table; width:100%; border-collapse:separate;border-spacing:3px;">
+					<div style="display: table-row-group;" >
+						<div style="display: table-row; ">
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">C</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">C#<br>Db</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">D</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">D#<br>Eb</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">E</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">F</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">F#<br>Gb</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">G</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">G#<br>Ab</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">A</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">A#<br>Bb</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">B</span></div>
+						</div>
+					</div>
+					<div style="display: table-row-group;" >
+						<div style="display: table-row; ">
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">Cm</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">C#m<br>Dbm</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">Dm</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">D#m<br>Ebm</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">Em</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">Fm</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">F#m<br>Gbm</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">Gm</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">G#m<br>Abm</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">Am</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">A#m<br>Bbm</span></div>
+							<div name="btnAcorde" class="botaoResposta" onclick="conferirRespostaIdentificarAcorde(this);"><span style="color: green">Bm</span></div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</main>
+    </body>
+</html>
