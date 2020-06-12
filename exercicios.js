@@ -483,7 +483,7 @@ function getNotasAcorde(notaBase, tipoAcorde, posicao)
 // ============================================================
 // DITADO DE ACORDES 1 (ini)
 // ------------------------------------------------------------
-function iniciarDitadoAcordes1() 
+function iniciarDitadoAcordes(tipoDitado) 
 {
 	var notasBase = []; // array com as notas selecionadas, já com as oitavas
 	var tiposAcorde = []; // (array com os tipos de acorde selecionados)
@@ -543,7 +543,10 @@ function iniciarDitadoAcordes1()
 	localStorage["tempoEntreAcordes"] = txtTempoEntreAcordes.value;
 	localStorage["coresIguais"] = radCoresIguais.checked;
 	
-	window.location.href = "ditadoAcordes1Execucao.html";
+	if (tipoDitado == "ditado1")
+		window.location.href = "ditadoAcordes1Execucao.html";
+	else
+		window.location.href = "ditadoAcordes2Execucao.html";
 }
 
 var _notaBaseAtual = "?";
@@ -598,7 +601,7 @@ function solicitarDitadoAcordes1()
 	containerApos.innerHTML = "<span class='blink'>Próximo acorde: </span><span style='color: blue'>" + notaBaseApresentacao + "</span>, <span style='color: orange'>" + posicaoAcordeSorteado.toLowerCase() + "</span>";
 
 	var containerAntes = document.getElementById("antesTecladoContainer");
-	containerAntes.style = "text-align: left;";
+	containerAntes.style = "text-align: left; font-size: larger;";
 	containerAntes.innerHTML = "<span style='color: #159957'>Acorde atual: </span><span style='color: blue'>" + _notaBaseApresentacaoAtual + "</span>, <span style='color: orange'>" + _posicaoAcordeAtual.toLowerCase() + "</span>";
 	
 	_notaBaseAtual = notaBaseSorteada;
@@ -609,6 +612,83 @@ function solicitarDitadoAcordes1()
     aguardar(tempoEntreAcordes * 1000, solicitarDitadoAcordes1);
 }
 
+function solicitarDitadoAcordes2() 
+{	
+	_notaBaseAtual = sortearElementoArray(localStorage["notasBase"].split(","));	
+	_tipoAcordeAtual = sortearElementoArray(localStorage["tiposAcorde"].split(","));
+	_posicaoAcordeAtual = sortearElementoArray(localStorage["posicoesAcorde"].split(","));
+	
+	_notasSelecionadasDitadoAcorde2 = [];
+	soltarTodasNotas();
+	
+	var notaBaseApresentacao = _notaBaseAtual;
+	if (notaBaseApresentacao.includes("|"))
+	{
+		var auxNotaBase = notaBaseApresentacao.split("|");
+		notaBaseApresentacao = sortearElementoArray(auxNotaBase);
+	}
+	
+	notaBaseApresentacao = notaBaseApresentacao.substring(0, notaBaseApresentacao.length - 1);
+	
+	if (_tipoAcordeAtual == "Menor")
+	{
+		notaBaseApresentacao += "m";
+	}
+	
+	var containerAntes = document.getElementById("antesTecladoContainer");
+	containerAntes.style = "text-align: left; font-size: larger;";
+	containerAntes.innerHTML = "<span style='color: #159957'>Monte o acorde </span><span style='color: blue'>" + notaBaseApresentacao + "</span>, <span style='color: orange'>" + _posicaoAcordeAtual.toLowerCase() + "</span>";
+	
+	var containerAntes = document.getElementById("aposTecladoContainer");
+	containerAntes.style = "text-align: left; font-size: larger;";
+	containerAntes.innerHTML = "<span style='color: orange'>OBS.: A nota base deve estar na quarta oitava.</span>";
+	
+}
+
+var _notasSelecionadasDitadoAcorde2 = [];
+function conferirRespostaDitadoAcorde2(nota) 
+{
+	var index = _notasSelecionadasDitadoAcorde2.indexOf(nota);
+	if (index > -1) {
+		_notasSelecionadasDitadoAcorde2.splice(index, 1);
+		pressionarNotas(_notasSelecionadasDitadoAcorde2.toString(), 'yellow', localStorage["_tipoDestaque"]);	
+		return;
+	}
+	
+	_notasSelecionadasDitadoAcorde2.push(nota);
+	
+	var respostaEsperada = getNotasAcorde(_notaBaseAtual, _tipoAcordeAtual, _posicaoAcordeAtual).split(",").sort();	
+	if (_notasSelecionadasDitadoAcorde2.length == respostaEsperada.length)
+	{
+		_notasSelecionadasDitadoAcorde2.sort();
+		
+		for (var i = 0; i < respostaEsperada.length; i++) 
+		{
+			if (respostaEsperada[i] != _notasSelecionadasDitadoAcorde2[i]) 
+			{
+				pressionarNotas(_notasSelecionadasDitadoAcorde2.toString(), 'orangered', localStorage["_tipoDestaque"]);	
+				pressionarNotas(respostaEsperada.toString(), 'lime', localStorage["_tipoDestaque"], false);	
+				_notasSelecionadasDitadoAcorde2 = [];
+				exibirBotaoLimparDitadoAcorde2();
+				return;
+			}
+		}
+		pressionarNotas(respostaEsperada.toString(), 'lime', localStorage["_tipoDestaque"]);	
+		aguardar(1000, solicitarDitadoAcordes2);
+	}
+	else
+	{
+		pressionarNotas(_notasSelecionadasDitadoAcorde2.toString(), 'yellow', localStorage["_tipoDestaque"]);	
+	}
+}
+
+function exibirBotaoLimparDitadoAcorde2() 
+{
+	var containerAntes = document.getElementById("aposTecladoContainer");
+	containerAntes.style = "text-align: left; font-size: larger;";
+	containerAntes.innerHTML = "<span style='color: orange'>OBS.: A nota base deve estar na quarta oitava.</span><input type='button' value='Tentar novamente' onclick='soltarTodasNotas()'/>";
+	
+}
 
 // ------------------------------------------------------------
 // DITADO DE ACORDES 1 (fim)
