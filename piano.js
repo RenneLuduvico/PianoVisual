@@ -446,7 +446,7 @@ function criarMarcadorNota(cor) {
 }
 
 // tipoDestaque: 'inteira' ou 'circulo'
-function pressionarNotas(notasEOitavas, cores, tipoDestaque) {
+function pressionarNotas(notasEOitavas, cores, tipoDestaque, limparNotasJaPressionadas) {
 	console.log("pressionarNotas(notasEOitavas)=" + notasEOitavas)
 	var arrNotasEOitavas = notasEOitavas.split(",")
 	var arrCores = Array(arrNotasEOitavas.length).fill(cores)
@@ -455,7 +455,15 @@ function pressionarNotas(notasEOitavas, cores, tipoDestaque) {
 	{
 		arrCores = cores.split(",");
 	}
-	soltarTodasNotas()
+	
+	if (typeof(limparNotasJaPressionadas)==='undefined') 
+	{
+		soltarTodasNotas()
+	} 
+	else if (limparNotasJaPressionadas) 
+	{
+		soltarTodasNotas()
+	}
 	
 	for (i = 0; i < arrNotasEOitavas.length; i++) 
 	{
