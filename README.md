@@ -8,14 +8,14 @@ Bons estudos!
 
 ## Exercícios com Intervalos
 
-[Completar Intervalos](/VisualPiano/intervaloOpcoes.html?acao=completar): Complete um intervalo solicitado a partir de uma nota selecionada.
+[Completar Intervalos](/intervaloOpcoes.html?acao=completar): Complete um intervalo solicitado a partir de uma nota selecionada.
 
-[Identificar Intervalos](/VisualPiano/intervaloOpcoes.html?acao=identificar): Identifique o intervalo apresentado.
+[Identificar Intervalos](/intervaloOpcoes.html?acao=identificar): Identifique o intervalo apresentado.
 
 ## Exercícios com Acordes
 
-[Ditado de acordes 1](/VisualPiano/acordeOpcoes.html?acao=ditado1): Execute ao piano o acorde solicitado e confira o resultado na tela, após um intervalo de tempo preestabelecido.
+[Ditado de acordes 1](/acordeOpcoes.html?acao=ditado1): Execute ao piano o acorde solicitado e confira o resultado na tela, após um intervalo de tempo preestabelecido.
 
-[Ditado de acordes 2](/VisualPiano/acordeOpcoes.html?acao=ditado2): Forme o acorde solicitado no teclado apresentado na tela.
+[Ditado de acordes 2](/acordeOpcoes.html?acao=ditado2): Forme o acorde solicitado no teclado apresentado na tela.
 
-[Identificar acorde](/VisualPiano/acordeOpcoes.html?acao=identificar): Identifique o acorde apresentado na tela.
+[Identificar acorde](/acordeOpcoes.html?acao=identificar): Identifique o acorde apresentado na tela.
