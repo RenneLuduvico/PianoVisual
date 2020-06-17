@@ -11,6 +11,10 @@
  * Licensed under The MIT License (MIT)
  */
 
+/**
+ * alterado
+ */
+
 
 var octaves = {
     C1 : 0, //,,,
@@ -45,7 +49,7 @@ function setSelectedClef(newClef) {
     var isF3 = newClef == clefs.F3
     var isG4 = newClef == clefs.G4
     if (!isF3 && !isG4) {
-        console.log("Keyboard > setSelectedClef > clef not in predefined values")
+        // console.log("Keyboard > setSelectedClef > clef not in predefined values")
     }
     _selectedClef = newClef
 
@@ -64,7 +68,7 @@ function paeCodeForKeyAtIndex(keyIndex, baseOctave, duration) {
     var octaveIndex = baseOctave + octaveOffset
     var octaveSigns = [",,,", ",,", ",", "'", "''", "'''", "''''"]
     var octaveSign = octaveSigns[octaveIndex]
-    console.log("octaveInd = " + keyIndex + " + " + baseOctave + " + " + octaveOffset)
+    // console.log("octaveInd = " + keyIndex + " + " + baseOctave + " + " + octaveOffset)
 	/*
     var notes = [duration + "C",
         "x" + duration + "C",
@@ -100,7 +104,7 @@ function paeCodeForKeyAtIndex(keyIndex, baseOctave, duration) {
 	
     var note = notes[keyIndex % KEYS_PER_OCTAVE]
     note = octaveSign + note
-    console.log("paeCode = " + note)
+    // console.log("paeCode = " + note)
 
     return note
 }
@@ -111,11 +115,11 @@ function svgNotesForPlaineEasieCode(paeCode, clef, width, scalePercent) {
     if (typeof(scalePercent)==='undefined') scalePercent = 20
 
     if (scalePercent < 5) {
-        console.log("svgNotesForPlaineEasieCode > your scale is very low. It should be between 5 and 100")
+        // console.log("svgNotesForPlaineEasieCode > your scale is very low. It should be between 5 and 100")
     }
 
     if (width < 100) {
-        console.log("svgNotesForPlaineEasieCode > your width is very low. Notes may be cut off.")
+        // console.log("svgNotesForPlaineEasieCode > your width is very low. Notes may be cut off.")
     }
 
     var data = "@clef:" + clef + "\n"
@@ -125,7 +129,7 @@ function svgNotesForPlaineEasieCode(paeCode, clef, width, scalePercent) {
 
 
     
-    console.log("svgNotesForPlaineEasieCode > data: \n" + data)
+    // console.log("svgNotesForPlaineEasieCode > data: \n" + data)
     var pageWidth = width * 100/scalePercent //so the resulting width of the SVG element is always as defined in width
 
     var options = JSON.stringify({
@@ -137,7 +141,7 @@ function svgNotesForPlaineEasieCode(paeCode, clef, width, scalePercent) {
         scale: scalePercent,
         adjustPageHeight: 1
     })
-    console.log("svgNotesForPlaineEasieCode > options: \n" + options)
+    // console.log("svgNotesForPlaineEasieCode > options: \n" + options)
 
 
     var notesSVG = verovioToolkit.renderData(data, options);
@@ -447,7 +451,7 @@ function criarMarcadorNota(cor) {
 
 // tipoDestaque: 'inteira' ou 'circulo'
 function pressionarNotas(notasEOitavas, cores, tipoDestaque, limparNotasJaPressionadas) {
-	console.log("pressionarNotas(notasEOitavas)=" + notasEOitavas)
+	// console.log("pressionarNotas(notasEOitavas)=" + notasEOitavas)
 	var arrNotasEOitavas = notasEOitavas.split(",")
 	var arrCores = Array(arrNotasEOitavas.length).fill(cores)
 	
@@ -471,7 +475,7 @@ function pressionarNotas(notasEOitavas, cores, tipoDestaque, limparNotasJaPressi
 		
     	var elementoNota = document.getElementById("note" + notaEOitavaAjustada)
 
-		console.log("note" + notaEOitavaAjustada)
+		// console.log("note" + notaEOitavaAjustada)
 		
 		if (elementoNota != undefined) 
 		{
