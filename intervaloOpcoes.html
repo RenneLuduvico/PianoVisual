@@ -24,6 +24,10 @@
 					$("#titulo").html("Identificar intervalo");
 					$("#botaoAcaoContainer").html("<input type=\"button\" value=\"Iniciar\" onclick=\"javascript:iniciarCompletarOuIdentificarIntervalo('identificar');\">");
 				}
+				else
+				{
+					window.location = '/';				
+				}				
             });
         </script>
     </head>
@@ -32,6 +36,7 @@
         <main id="content" class="main-content" role="main">
             <div style="display:block" id="opcoesCompletarIntervaloContainer" padding="10px">
                 <h2 id="titulo"></h2>
+				<p>Selecione as opções para este exercício e clique em "Iniciar".</p>
 				<fieldset>
 					<legend>Tipo de intervalo</legend>
 					<div style="float:left; width:50%">
@@ -139,19 +144,6 @@
 						<br/>
 						<input type="checkbox" id="chkNotaAsBb" name="chkNotas" value="A#|Bb" checked>
 						<label for="chkNotaAsBb">A#|Bb</label>
-					</div>
-				</fieldset>
-				<br/>
-				<fieldset>
-					<legend>Tipo de destaque</legend>
-					<div style="float:left; width:50%">
-						<input type="radio" id="radTipoDestaqueTeclaInteira" name="radTipoDestaque" value="inteira" checked>
-						<label for="radTipoDestaqueTeclaInteira">Tecla inteira</label>
-					</div>
-					
-					<div style="float:left; width:50%">
-						<input type="radio" id="radGrupoNotasTeclasPretas" name="radTipoDestaque" value="circulo">
-						<label for="radGrupoNotasTeclasPretas">Círculo</label>            
 					</div>
 				</fieldset>
 				<br/>
