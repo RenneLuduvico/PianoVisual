@@ -23,11 +23,19 @@
 				{					
 					$("#titulo").html("Ditado de acordes");
 					$("#botaoAcaoContainer").html("<input type=\"button\" value=\"Iniciar\" onclick=\"javascript:iniciarDitadoAcordes('ditado2');\">");
+					$("#divCores").remove();
+					$("#divTempo").remove();
 				}
 				else if (paramValue == "identificar") 
 				{					
 					$("#titulo").html("Identificar acorde");
 					$("#botaoAcaoContainer").html("<input type=\"button\" value=\"Iniciar\" onclick=\"javascript:iniciarIdentificarAcorde();\">");
+					$("#divCores").remove();
+					$("#divTempo").remove();
+				}
+				else
+				{
+					window.location = "/";
 				}
             });
         </script>
@@ -114,24 +122,28 @@
 						<label for="chkPosicaoAcordeSegundaInversao">Segunda inversão</label>
 					</div>					
 				</fieldset>
-				<br/>
-				<fieldset>
-					<legend>Cores das teclas</legend>
-					<div style="float:left; width:50%">
-						<input type="radio" id="radCoresIguais" name="chkCoresIguais" value="CoresIguais" checked>
-						<label for="radCoresIguais"><span  style="background: lime">Fundamental</span>, <span  style="background: lime">Terça</span>, <span  style="background: lime">Quinta</span></label>
-						<br/>
-					</div>					
-					<div style="float:left; width:50%">
-						<input type="radio" id="radCoresDiferentes" name="chkCoresIguais" value="CoresDiferentes">
-						<label for="radCoresDiferentes"><span  style="background: lime">Fundamental</span>, <span  style="background: yellow">Terça</span>, <span  style="background: cyan">Quinta</span></label>
-					</div>					
-				</fieldset>
-				<br/>
-				<fieldset>
-					<legend>Tempo de espera entre os acordes</legend>
-					<input type="text" id="txtTempoEntreAcordes" maxlength="3" size="3" value="5"/> segundos
-				</fieldset>
+				<div id="divCores">
+					<br/>
+					<fieldset>
+						<legend>Cores das teclas</legend>
+						<div style="float:left; width:50%">
+							<input type="radio" id="radCoresIguais" name="chkCoresIguais" value="CoresIguais" checked>
+							<label for="radCoresIguais"><span  style="background: lime">Fundamental</span>, <span  style="background: lime">Terça</span>, <span  style="background: lime">Quinta</span></label>
+							<br/>
+						</div>					
+						<div style="float:left; width:50%">
+							<input type="radio" id="radCoresDiferentes" name="chkCoresIguais" value="CoresDiferentes">
+							<label for="radCoresDiferentes"><span  style="background: lime">Fundamental</span>, <span  style="background: yellow">Terça</span>, <span  style="background: cyan">Quinta</span></label>
+						</div>					
+					</fieldset>
+				</div>
+				<div id="divTempo">
+					<br/>
+					<fieldset>
+						<legend>Tempo de espera entre os acordes</legend>
+						<input type="text" id="txtTempoEntreAcordes" maxlength="3" size="3" value="5"/> segundos
+					</fieldset>
+				</div>
 				<br/>
 				<div id="botaoAcaoContainer"></div>
             </div>
