@@ -274,9 +274,9 @@ function solicitarCompletarIntervalo()
 	var container = document.getElementById("antesTecladoContainer")
 	
 	container.style = "text-align: left;";
-	container.innerHTML = "<span style='color: #159957'>Complete o intervalo com uma </span>" +
-	    "<span style='color: blue'>" + getNomeIntervaloPorCodigo(_codigoIntervaloSorteado) + 
-		"</span>, <span style='color: orange'>" + _direcaoSorteada.replace("asc", "ascendente").replace("desc", "descendente") + "</span>";
+	container.innerHTML = "<span style='color: #159957; font-size: larger;'>Complete o intervalo com uma </span>" +
+	    "<span style='color: blue; font-size: larger;'>" + getNomeIntervaloPorCodigo(_codigoIntervaloSorteado) + 
+		"</span>, <span style='color: orange; font-size: larger;'>" + _direcaoSorteada.replace("asc", "ascendente").replace("desc", "descendente") + "</span>";
 	
 	pressionarNotas(_notaBaseSelecionada, "yellow", localStorage["_tipoDestaque"]);
 }
