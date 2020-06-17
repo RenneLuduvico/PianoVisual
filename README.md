@@ -1,6 +1,6 @@
 # Olá!
 
-Aqui você encontra exercícios para facilitar a identificação de intervalos e acordes ao piano.
+Aqui você encontra exercícios para agilizar a identificação e formação de intervalos e acordes ao piano.
 
 O foco dos exercícios é apenas na parte visual, portanto, este site não toca as notas e acordes apresentados na tela.
 
