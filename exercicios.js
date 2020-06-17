@@ -1,3 +1,8 @@
+/**
+ * Desenvolvido por Rennê Luduvico (renne.luduvico@gmail.com)
+ * 2020
+ */
+
 var todasNotasEOitavas = [
 	"C1", "C#1|Db1", "D1", "D#1|Eb1", "E1", "F1", "F#1|Gb1", "G1", "G#1|Ab1", "A1", "A#1|Bb1", "B1",
 	"C2", "C#2|Db2", "D2", "D#2|Eb2", "E2", "F2", "F#2|Gb2", "G2", "G#2|Ab2", "A2", "A#2|Bb2", "B2",
@@ -172,7 +177,6 @@ function SelecionarTeclasBrancasOuPretas()
 	
 }
 
-
 function iniciarCompletarOuIdentificarIntervalo(completarOuIdentificar) 
 {
 	var _tipoIntervalo = []; // (array com os códigos dos tipos de intervalos selecionados)
@@ -184,7 +188,7 @@ function iniciarCompletarOuIdentificarIntervalo(completarOuIdentificar)
 	var chkDirecaoIntervalo = document.getElementsByName("chkDirecaoIntervalo");
 	var chkNotas = document.getElementsByName("chkNotas");
 	var radTeclaInteira = document.getElementById("radTipoDestaqueTeclaInteira");
-
+	
 	for (var i = 0; i < chkTipoIntervalo.length; i++)
 	{
 		if (chkTipoIntervalo[i].checked)
@@ -209,10 +213,10 @@ function iniciarCompletarOuIdentificarIntervalo(completarOuIdentificar)
 		}			
 	}
 	
-	if (radTeclaInteira.checked) 
+	//if (radTeclaInteira.checked) 
 		_tipoDestaque = "inteira"
-	else
-		_tipoDestaque = "circulo";
+	//else
+	//	_tipoDestaque = "circulo";
 
 	if (_tipoIntervalo.length == 0) 
 	{
@@ -250,6 +254,12 @@ var _respostaEsperada = "";
 
 function solicitarCompletarIntervalo() 
 {
+	if (localStorage["_notasBase"] == null) 
+	{		
+		window.location = "/";
+		return;
+	}
+	
 	_notaBaseSelecionada = sortearElementoArray(localStorage["_notasBase"].split(","));	
 	_codigoIntervaloSorteado = sortearElementoArray(localStorage["_tipoIntervalo"].split(","));
 	_direcaoSorteada = sortearElementoArray(localStorage["_direcaoIntervalo"].split(","));
@@ -269,8 +279,6 @@ function solicitarCompletarIntervalo()
 		"</span>, <span style='color: orange'>" + _direcaoSorteada.replace("asc", "ascendente").replace("desc", "descendente") + "</span>";
 	
 	pressionarNotas(_notaBaseSelecionada, "yellow", localStorage["_tipoDestaque"]);
-	
-	// iniciarCronometroExercicioCompletarIntervalo();
 }
 
 function clicouProximoCompletarIntervalo() 
@@ -278,7 +286,6 @@ function clicouProximoCompletarIntervalo()
 	document.getElementById("botaoProximoContainer").style = "display:none";
 	solicitarCompletarIntervalo();
 }
-
 
 function conferirResposta(resposta) 
 {
@@ -291,7 +298,7 @@ function conferirResposta(resposta)
 	else
 	{
 		pressionarNotas(_notaBaseSelecionada + "," + resposta + "," + _respostaEsperada, "yellow,orangered,lime", localStorage["_tipoDestaque"]);
-		document.getElementById("antesTecladoContainer").innerHTML = "<span style='color: orangered'>Clique na resposta correta para continuar: </span>"+
+		document.getElementById("antesTecladoContainer").innerHTML = "<span style='color: orangered; font-size: larger;'>Clique na resposta correta para continuar: </span>"+
 			"<span style='color: blue'>" + getNomeIntervaloPorCodigo(_codigoIntervaloSorteado) + 
 			"</span>, <span style='color: orange'>" + _direcaoSorteada.replace("asc", "ascendente").replace("desc", "descendente") + "</span>";
 		
@@ -328,6 +335,12 @@ function tratarTickExercicioCompletarIntervalo(tempo)
 
 function solicitarIdentificarIntervalo() 
 {
+	if (localStorage["_notasBase"] == null) 
+	{
+		window.location = "/";
+		return;		
+	}
+	
 	limparCoresBotoesIntervalos();
     document.getElementById("antesTecladoContainer").innerHTML = "";
 	
@@ -344,7 +357,7 @@ function solicitarIdentificarIntervalo()
 	var container = document.getElementById("antesTecladoContainer")
 	
 	container.style = "text-align: left;";
-	container.innerHTML = "<span style='color: #159957'>Identifique o intervalo. </span>";
+	container.innerHTML = "<span style='color: #159957; font-size: larger'>Identifique o intervalo. </span>";
 	
 	
 	//iniciarCronometroExercicioIdentificarIntervalo();
@@ -390,7 +403,7 @@ function conferirRespostaIdentificarIntervalo(botaoResposta)
 			if (respostaConfere) 
 			{
 				botoesIntervalos[i].style.backgroundColor = "lime";
-		        document.getElementById("antesTecladoContainer").innerHTML = "<span style='color: orangered'>Clique na resposta correta para continuar. </span>";
+		        document.getElementById("antesTecladoContainer").innerHTML = "<span style='color: orangered; font-size: larger;'>Clique na resposta correta para continuar. </span>";
 				break
 			}
 		}	
@@ -540,8 +553,12 @@ function iniciarDitadoAcordes(tipoDitado)
 	localStorage["notasBase"] = notasBase
 	localStorage["tiposAcorde"] = tiposAcorde;
 	localStorage["posicoesAcorde"] = posicoesAcorde;
-	localStorage["tempoEntreAcordes"] = txtTempoEntreAcordes.value;
-	localStorage["coresIguais"] = radCoresIguais.checked;
+	
+	if (txtTempoEntreAcordes != null)
+	{
+		localStorage["tempoEntreAcordes"] = txtTempoEntreAcordes.value;
+		localStorage["coresIguais"] = radCoresIguais.checked;
+	}
 	
 	if (tipoDitado == "ditado1")
 		window.location.href = "ditadoAcordes1Execucao.html";
@@ -780,7 +797,7 @@ function solicitarIdentificarAcorde()
 	var container = document.getElementById("antesTecladoContainer")
 	
 	container.style = "text-align: left;";
-	container.innerHTML = "<span style='color: #159957'>Identifique o acorde. </span>";
+	container.innerHTML = "<span style='color: #159957; font-size: larger;'>Identifique o acorde. </span>";
 }
 
 function conferirRespostaIdentificarAcorde(botaoResposta)
@@ -804,7 +821,7 @@ function conferirRespostaIdentificarAcorde(botaoResposta)
 			if (resposta == _respostaEsperada) 
 			{
 				botoesAcorde[i].style.backgroundColor = "lime";
-		        document.getElementById("antesTecladoContainer").innerHTML = "<span style='color: orangered'>Clique na resposta correta para continuar. </span>";
+		        document.getElementById("antesTecladoContainer").innerHTML = "<span style='color: orangered; font-size: larger;'>Clique na resposta correta para continuar. </span>";
 				break
 			}
 		}	
