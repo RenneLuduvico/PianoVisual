@@ -2,7 +2,7 @@
 
 Aqui você encontra exercícios para agilizar a identificação e formação de intervalos e acordes ao piano.
 
-O foco dos exercícios é apenas na parte visual, portanto, este site não toca as notas e acordes apresentados na tela.
+O foco dos exercícios é apenas na parte visual. Portanto, este site não toca as notas e acordes apresentados na tela.
 
 Bons estudos!
 
