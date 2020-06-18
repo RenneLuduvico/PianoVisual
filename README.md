@@ -19,3 +19,12 @@ Bons estudos!
 [Ditado de acordes 2](/acordeOpcoes.html?acao=ditado2): Forme o acorde solicitado no teclado apresentado na tela.
 
 [Identificar acorde](/acordeOpcoes.html?acao=identificar): Identifique o acorde apresentado na tela.
+
+## Contato
+
+Para entrar em contato sobre este site, por favor, envie um e-mail para vp.visualpiano@gmail.com
+
+## Sobre
+
+Este site foi desenvolvido por Rennê Luduvico.
+Junho/2020
